@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#7b1e3b">
+  <title>Janis Wedding — Gestion des invitations</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">JW</div><div><b>Janis Wedding</b><small>Invitations</small></div></div>
+      <nav>
+        <button class="nav active" data-page="dashboard">⌂ <span>Tableau de bord</span></button>
+        <button class="nav" data-page="guests">♙ <span>Invités</span></button>
+        <button class="nav" data-page="add">＋ <span>Ajouter un invité</span></button>
+        <button class="nav" data-page="scanner">▣ <span>Scanner QR</span></button>
+      </nav>
+      <div class="side-note">Version 1.0<br><span>Base locale prête à évoluer vers Supabase</span></div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <button id="menuBtn" class="icon-btn">☰</button>
+        <div><b id="pageTitle">Tableau de bord</b><small>Gestion des invitations</small></div>
+        <button class="primary" id="quickAdd">＋ Invité</button>
+      </header>
+
+      <section id="dashboard" class="page active">
+        <div class="hero">
+          <div>
+            <span class="eyebrow">JANIS WEDDING</span>
+            <h1>Vos invitations, simplement.</h1>
+            <p>Ajoutez un invité, générez son invitation avec QR code et partagez-la.</p>
+            <button class="primary" data-go="add">＋ Ajouter un invité</button>
+          </div>
+          <div class="hero-card">💍<br><small>Une invitation<br>unique pour chaque invité</small></div>
+        </div>
+        <div class="stats">
+          <div class="stat"><span>👥</span><small>Total invités</small><strong id="statTotal">0</strong></div>
+          <div class="stat"><span>💌</span><small>Invitations générées</small><strong id="statGenerated">0</strong></div>
+          <div class="stat"><span>✓</span><small>Confirmés</small><strong id="statConfirmed">0</strong></div>
+          <div class="stat"><span>▣</span><small>Présents</small><strong id="statPresent">0</strong></div>
+        </div>
+        <div class="section-head"><h2>Derniers invités</h2><button class="text-btn" data-go="guests">Voir tout</button></div>
+        <div id="recentGuests" class="guest-list"></div>
+      </section>
+
+      <section id="guests" class="page">
+        <div class="section-head"><div><h1>Invités</h1><p>Recherchez et gérez vos invitations.</p></div><button class="primary" data-go="add">＋ Ajouter</button></div>
+        <div class="search"><span>⌕</span><input id="search" placeholder="Rechercher un nom ou téléphone…"></div>
+        <div id="guestList" class="guest-list"></div>
+      </section>
+
+      <section id="add" class="page">
+        <div class="form-card">
+          <div class="section-head"><div><h1>Nouvel invité</h1><p>Les informations sont enregistrées sur cet appareil.</p></div></div>
+          <form id="guestForm">
+            <div class="grid2">
+              <label>Nom et prénom<input id="name" required placeholder="Ex. Jean Dupont"></label>
+              <label>Téléphone<input id="phone" placeholder="+243 …"></label>
+              <label>Nombre de personnes<input id="people" type="number" min="1" value="1" required></label>
+              <label>Catégorie<select id="category"><option>Famille</option><option>Amis</option><option>Collègues</option><option>Autre</option></select></label>
+              <label>Table / numéro<input id="table" placeholder="Ex. Table 12"></label>
+              <label>Statut<select id="status"><option value="pending">En attente</option><option value="confirmed">Confirmé</option></select></label>
+            </div>
+            <label>Note<textarea id="note" placeholder="Informations supplémentaires…"></textarea></label>
+            <div class="actions"><button type="button" class="secondary" data-go="guests">Annuler</button><button class="primary" type="submit">Créer l'invitation</button></div>
+          </form>
+        </div>
+      </section>
+
+      <section id="scanner" class="page">
+        <div class="form-card">
+          <h1>Scanner un QR code</h1>
+          <p>Scannez le QR d'une invitation pour retrouver l'invité et enregistrer sa présence.</p>
+          <div id="reader"></div>
+          <button id="startScan" class="primary">📷 Démarrer la caméra</button>
+          <div id="scanResult"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-box">
+      <button id="closeModal" class="close">×</button>
+      <div id="invitationPreview"></div>
+      <div class="actions">
+        <button id="downloadBtn" class="primary">⬇ Télécharger l'image</button>
+        <button id="shareBtn" class="secondary">📤 Partager</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://unpkg.com/html5-qrcode" defer></script>
+  <script src="app.js"></script>
+</body>
+</html>
